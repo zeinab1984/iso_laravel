@@ -215,12 +215,12 @@
                     <li class="nav-item">
                         <a href="{{route('categories.create')}}" class="nav-link"> ایجاد دسته بندی جدید</a>
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{route('categories.create')}}" class="nav-link"> لیست پست ها</a>--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{route('categories.create')}}" class="nav-link"> ایجاد پست جدید</a>--}}
-{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('posts.index')}}" class="nav-link"> لیست پست ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('posts.create')}}" class="nav-link"> ایجاد پست جدید</a>
+                    </li>
 {{--                    <li class="nav-item">--}}
 {{--                        <a href="{{route('categories.create')}}" class="nav-link"> لیست کامنت ها</a>--}}
 {{--                    </li>--}}

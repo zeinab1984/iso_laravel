@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -27,7 +28,8 @@ class PostController extends Controller
     public function create()
     {
             $data =[
-            'categories' => Category::all()
+            'categories' => Category::all(),
+                'tags'=>Tag::all()
             ];
 
         return view('posts.create',$data);
@@ -50,6 +52,7 @@ class PostController extends Controller
         $post->user_id = 1;
         $post->status = $request->status;
         $post->save();
+        $post->tags()->sync($request->tag);
         return redirect()->route('posts.index');
     }
 
@@ -75,7 +78,10 @@ class PostController extends Controller
         $data = [
             'post'=>$post,
             'categories'=>Category::all(),
+            'tags'=>Tag::all(),
+            'tag_ids'=> $post->tags()->pluck('id')->toArray(),
         ];
+//        dd($data);
         return view('posts.edit',$data);
     }
 
@@ -88,6 +94,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+//        dd($request);
         $post->title = $request->title;
         $post->short_content = $request->short_content;
         $post->content = $request->post_content;

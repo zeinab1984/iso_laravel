@@ -47,22 +47,22 @@
                 <div class="form-group">
                     <label class="control-label" for="inputError"> وضعیت انتشار</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" value="پیش نویس" checked>
-                        <label class="form-check-label">پیش نویس</label>
+                        <input class="form-check-input" type="radio" name="status" id="status1" value="پیش نویس" checked>
+                        <label class="form-check-label" for="status1">پیش نویس</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" value="منتشر شده">
-                        <label class="form-check-label">منتشر شده</label>
+                        <input class="form-check-input" type="radio" id="status2" name="status" value="منتشر شده">
+                        <label class="form-check-label" for="status2">منتشر شده</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <p>تگ ها:</p>
-{{--                    @foreach($tags as $tag)--}}
-{{--                        <div class="form-check">--}}
-{{--                            <input class="form-check-input" type="checkbox" name="tag[]" value="{{$tag->id}}" >--}}
-{{--                            <label class="form-check-label">{{$tag->title}}</label>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
+                    @foreach($tags as $tag)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tag[]" id="tag{{$tag->id}}" value="{{$tag->id}}" >
+                            <label class="form-check-label" for="tag{{$tag->id}}">{{$tag->title}}</label>
+                        </div>
+                    @endforeach
 
                 </div>
 

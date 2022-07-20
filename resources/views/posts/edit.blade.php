@@ -3,6 +3,7 @@
 @section('title','ویرایش پست ها')
 
 @section('content')
+
     <form  method="post" action="{{route('posts.update',['post'=>$post->id])}}" >
         @csrf
         {{--        @if ($errors->any())--}}
@@ -56,13 +57,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-{{--                    <p>تگ ها:</p>--}}
-                    {{--                    @foreach($tags as $tag)--}}
-                    {{--                        <div class="form-check">--}}
-                    {{--                            <input class="form-check-input" type="checkbox" name="tag[]" value="{{$tag->id}}" >--}}
-                    {{--                            <label class="form-check-label">{{$tag->title}}</label>--}}
-                    {{--                        </div>--}}
-                    {{--                    @endforeach--}}
+                    <p>تگ ها:</p>
+                          @foreach($tags as $tag)
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" name="tag[]" value="{{$tag->id}}"
+                                         @if(@in_array($tag->id,$tag_ids))checked @endif >
+                                  <label class="form-check-label">{{$tag->title}}</label>
+                              </div>
+                          @endforeach
 
                 </div>
 

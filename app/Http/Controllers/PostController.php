@@ -52,7 +52,7 @@ class PostController extends Controller
         $post->user_id = 1;
         $post->status = $request->status;
         $post->save();
-        $post->tags()->sync($request->tag);
+        $post->tags()->attach($request->tag);
         return redirect()->route('posts.index');
     }
 
@@ -101,6 +101,7 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         $post->status = $request->status;
         $post->save();
+        $post->tags()->sync($request->tag);
         return redirect()->route('posts.index');
     }
 

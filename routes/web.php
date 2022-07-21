@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,3 +45,12 @@ Route::prefix('posts')->group(function (){
     Route::post('/update/{post}',[PostController::class,'update'])->name('posts.update');
     Route::get('/destroy/{post}',[PostController::class,'destroy'])->name('posts.destroy');
 });
+
+
+Route::prefix('comments')->group(function (){
+    Route::get('/',[CommentController::class,'index'])->name('comments.index');
+    Route::get('/edit/{comment}',[CommentController::class,'edit'])->name('comments.edit');
+    Route::post('/update/{comment}',[CommentController::class,'update'])->name('comments.update');
+    Route::get('/destroy/{comment}',[CommentController::class,'destroy'])->name('comments.destroy');
+});
+

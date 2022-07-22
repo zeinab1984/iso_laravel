@@ -20,8 +20,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post" action="" >
-            <div class="card-body">
+        <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">عنوان پست</label>
                     <input type="text" name="title" value="{{$post->title}}" class="form-control" id="exampleInputEmail1" >
@@ -68,11 +67,11 @@
 
                 </div>
 
-            </div>
+        </div>
             <!-- /.card-body -->
 
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">ثبت</button>
-            </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">ثبت</button>
+        </div>
     </form>
 @endsection

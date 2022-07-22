@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,21 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+Route::prefix('admin')->group(function () {
+    Route::get('/posts',[PostController::class,'index'])->name('posts.index');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/assignment/{user}', [UserController::class, 'role_assignment'])->name('users.assignment');
+    Route::post('/store/{user}', [UserController::class, 'role_store'])->name('users.role.store');
+
+});
+
+
+
+Route::prefix('profile')->group(function () {
+    Route::get('/', [FileController::class, 'createForm'])->name('profile.createForm');
+    Route::post('/update/{user}', [FileController::class, 'update'])->name('profile.update');
+    Route::post('/fileUpload', [FileController::class, 'fileUpload'])->name('profile.fileUpload');
+});
 
 Route::prefix('categories')->group(function (){
     Route::get('/',[CategoryController::class,'index'])->name('categories.index');
@@ -54,14 +70,6 @@ Route::prefix('comments')->group(function (){
     Route::get('/edit/{comment}',[CommentController::class,'edit'])->name('comments.edit');
     Route::post('/update/{comment}',[CommentController::class,'update'])->name('comments.update');
     Route::get('/destroy/{comment}',[CommentController::class,'destroy'])->name('comments.destroy');
-});
-
-Route::prefix('profile')->group(function () {
-
-    Route::get('/', [FileController::class, 'createForm'])->name('profile.createForm');
-    Route::post('/update/{user}', [FileController::class, 'update'])->name('profile.update');
-    Route::post('/fileUpload', [FileController::class, 'fileUpload'])->name('profile.fileUpload');
-
 });
 
 

@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->string('file_path')->nullable();
-            $table->morphs('fileable');
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->foreignId('user_id');
+            $table->foreignId('role_id');
             $table->timestamps();
+            $table->primary(['user_id','role_id']);
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('role_user');
     }
 };

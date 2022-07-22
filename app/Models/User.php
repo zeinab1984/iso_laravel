@@ -41,4 +41,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withPivot('role_id')->withTimestamps();
+    }
+
+    public function file()
+    {
+        return $this->morphOne(File::class,'fileable');
+    }
+
+    public function getroles()
+    {
+       return $this->roles()->withpivot('role_id');
+
+    }
+
 }

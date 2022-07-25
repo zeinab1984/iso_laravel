@@ -40,9 +40,9 @@
         <!-- Right navbar links -->
 {{--        <ul class="navbar-nav ml-auto">--}}
 {{--            <!-- Messages Dropdown Menu -->--}}
-{{--            <li class="nav-item dropdown">--}}
-{{--                <a href="logout.php" class="btn btn-danger">خروج</a>--}}
-{{--            </li>--}}
+            <li class="nav-item dropdown">
+                <a href="{{route('signout')}}" class="btn btn-danger">خروج</a>
+            </li>
 {{--            <li class="nav-item dropdown">--}}
 {{--                <a class="nav-link" data-toggle="dropdown" href="#">--}}
 {{--                    <i class="far fa-comments"></i>--}}
@@ -174,10 +174,14 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{{asset('admin-assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+                    @if(Auth::user()->file)
+                        <img class="image rounded-circle" src="{{asset('/storage/app/public/uploads'.Auth::user()->file()->file_path)}}" alt="profile_image" style="width: 80px;height: 80px; padding: 10px; margin: 0px; ">
+                    @endif
+{{--                    @dd(asset( Auth::user()->file()->find()))--}}
+{{--                    <img src="{{asset( Auth::user()->file()->select('file_path')->get())}}" class="img-circle elevation-2" alt="User Image">--}}
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Alexander Pierce</a>
+                    <a href="#" class="d-block">{{Auth::user()->name}}</a>
                 </div>
             </div>
 
@@ -208,10 +212,19 @@
 {{--                                </a>--}}
 {{--                            </li>--}}
 {{--                        </ul>--}}
-                    </li>
+{{--                    </li>--}}
+
+                <ul>
                     <li class="nav-item">
                         <a href="{{route('profile.createForm')}}" class="nav-link"> مشخصات من</a>
                     </li>
+
+                    @if(in_array('admin', auth()->user()->roles()->pluck('title')->toArray()))
+                        <li>
+                        <a href="{{route('users.index')}}" class="nav-link"> لیست کاربران</a>
+                        </li>
+                    @endif
+
                     <li class="nav-item">
                         <a href="{{route('categories.index')}}" class="nav-link"> لیست دسته بندی</a>
                     </li>

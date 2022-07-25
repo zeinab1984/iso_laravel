@@ -13,19 +13,19 @@
         </div>
         <div class="form-group">
            <div class="form-check">
-                <input class="form-check-input" name="role[]" type="checkbox" value="1" id="flexCheckDefault" >
+                <input class="form-check-input" name="role[]" type="checkbox" value="1" id="flexCheckDefault" @if(@in_array('admin',$roles))checked @endif>
                 <label class="form-check-label" for="flexCheckDefault">مدیر سایت</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="role[]" type="checkbox" value="4" id="flexCheckChecked" >
+                <input class="form-check-input" name="role[]" type="checkbox" value="4" id="flexCheckChecked" @if(@in_array('writer',$roles))checked @endif>
                 <label class="form-check-label" for="flexCheckChecked">نویسنده</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="role[]" type="checkbox" value="2" id="flexCheckChecked" >
+                <input class="form-check-input" name="role[]" type="checkbox" value="2" id="flexCheckChecked" @if(@in_array('editor',$roles))checked @endif>
                 <label class="form-check-label" for="flexCheckChecked">ویرایش گر</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="role[]" type="checkbox" value="3" id="flexCheckChecked" >
+                <input class="form-check-input" name="role[]" type="checkbox" value="3" id="flexCheckChecked" @if(@in_array('user',$roles))checked @endif>
                 <label class="form-check-label" for="flexCheckChecked">کاربر معمولی</label>
             </div>
         </div>

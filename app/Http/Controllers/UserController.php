@@ -60,17 +60,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function role_assignment(User $user)
+    public function roleAssignment(User $user)
     {
-
-        return view('admin.user.role_assignment',compact('user'));
+        $roles = $user->roles()->pluck('title')->toArray();
+//        dd( $role);
+        return view('admin.user.role_assignment',compact('user','roles'));
     }
 
 
-    public function role_store(Request $request, User $user)
+    public function roleStore(Request $request, User $user)
     {
 //        dd($request->role);
-        $user->roles()->attach($request->role);
+        $user->roles()->sync($request->role);
         return redirect()-> route('users.index');
     }
 
@@ -92,8 +93,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->file()->delete();
+        $user->roles()->detach();
+        $user->delete();
+        return redirect()-> route('users.index');
     }
 }

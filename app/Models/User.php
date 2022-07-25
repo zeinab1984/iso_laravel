@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class)->withPivot('role_id')->withTimestamps();
@@ -49,7 +54,7 @@ class User extends Authenticatable
 
     public function file()
     {
-        return $this->morphOne(File::class,'fileable');
+        return $this->morphMany(File::class,'fileable')->with('file_path');
     }
 
     public function getroles()

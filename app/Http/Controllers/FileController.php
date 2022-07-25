@@ -25,6 +25,7 @@ class FileController extends Controller
         $user->save();
     }
     public function fileUpload(Request $req){
+//        dd($req->file());
         $req->validate([
             'file' => 'required|mimes:jpg,jpeg,png|max:2048'
         ]);
@@ -35,6 +36,8 @@ class FileController extends Controller
             $filePath = $req->file('file')->storeAs('uploads', $fileName, 'public');
             $fileModel->name = time().'_'.$req->file->getClientOriginalName();
             $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->fileable_type = User::class;
+            $fileModel->fileable_id = $req->user;
             $fileModel->save();
             return back()
                 ->with('success','File has been uploaded.')

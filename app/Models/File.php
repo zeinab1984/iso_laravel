@@ -12,10 +12,18 @@ class File extends Model
         'name',
         'file_path'
     ];
+    /**
+     * @var mixed|string
+     */
+    private mixed $name;
+    /**
+     * @var mixed|string
+     */
+    private mixed $file_path;
 
     public function fileable()
     {
-        return $this->morphTo();
+        return $this->morphTo()->with('file_path');
 
     }
 }

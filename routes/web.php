@@ -33,8 +33,9 @@ require __DIR__.'/auth.php';
 Route::prefix('admin')->group(function () {
     Route::get('/posts',[PostController::class,'index'])->name('posts.index');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/assignment/{user}', [UserController::class, 'role_assignment'])->name('users.assignment');
-    Route::post('/store/{user}', [UserController::class, 'role_store'])->name('users.role.store');
+    Route::get('/assignment/{user}', [UserController::class, 'roleAssignment'])->name('users.assignment');
+    Route::post('/store/{user}', [UserController::class, 'roleStore'])->name('users.role.store');
+    Route::get('/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 });
 

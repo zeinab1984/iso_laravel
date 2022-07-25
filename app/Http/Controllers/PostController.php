@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,7 +17,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+
+        $user = Auth::user();
+
+        $roles = $user->roles()->pluck('title')->toArray();
+        if(in_array('admin',$roles))
+        {
+            $posts = Post::all();
+        } else{
+           $posts = $user->posts;
+        }
        return view('posts.index',compact('posts'));
     }
 

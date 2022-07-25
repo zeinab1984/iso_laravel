@@ -15,7 +15,6 @@
         </tr>
         </thead>
         <tbody>
-
         @foreach($posts as $post)
             <tr>
                 <td>{{$loop->iteration}}</td>

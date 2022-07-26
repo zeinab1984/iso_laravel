@@ -12,9 +12,14 @@ class FileController extends Controller
     public function createForm()
     {
         $user = Auth::user();
-//        dd($user);
+        $file_path = 'http://iso_laravel.test/storage/uploads/user3-128x128.jpg';
+        foreach ($user->files as $file){
+           if(isset($file->file_path)){
+               $file_path = $file->file_path;
+           }
+        }
 
-        return view('profile.createForm',compact('user'));
+        return view('profile.createForm',compact('user','file_path'));
     }
 
     public function update(Request $request,User $user,File $file )

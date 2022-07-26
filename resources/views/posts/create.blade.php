@@ -69,6 +69,11 @@
             </div>
             <!-- /.card-body -->
 
+            <div class="custom-file">
+                <input type="file" name="image" class="custom-file-input" id="chooseFile">
+                <label class="custom-file-label" for="chooseFile">انتخاب عکس</label>
+            </div>
+
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">ثبت</button>
             </div>

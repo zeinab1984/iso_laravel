@@ -52,9 +52,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->withPivot('role_id')->withTimestamps();
     }
 
-    public function file()
+    public function files()
     {
-        return $this->morphMany(File::class,'fileable')->with('file_path');
+        return $this->morphMany(File::class,'fileable');
     }
 
     public function getroles()

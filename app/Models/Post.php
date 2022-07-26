@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-     public function category()
+
+
+
+    private mixed $id;
+
+    public function category()
      {
          return $this->belongsTo(Category::class);
      }
@@ -28,9 +33,9 @@ class Post extends Model
         return $this->belongsToMany(Comment::class);
     }
 
-    public function file()
+    public function files()
     {
-        return $this->morphOne(File::class,'fileable');
+        return $this->morphMany(File::class,'fileable');
 
     }
 

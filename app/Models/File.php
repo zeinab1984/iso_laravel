@@ -23,7 +23,7 @@ class File extends Model
 
     public function fileable()
     {
-        return $this->morphTo()->with('file_path');
+        return $this->morphTo();
 
     }
 }

@@ -3,6 +3,11 @@
 @section('title','پروفایل شخصی')
 
 @section('content')
+    <div class="form-group">
+        @if($file_path)
+        <image src="{{asset($file_path)}}"></image>
+        @endif
+    </div>
     <form  method="post" action="{{route('profile.update',['user'=>$user->id])}}" enctype="multipart/form-data" >
         @csrf
                 @if ($errors->any())

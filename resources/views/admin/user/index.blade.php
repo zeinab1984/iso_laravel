@@ -4,6 +4,7 @@
 
 
 @section('content')
+
     <table class="table table-bordered">
         <thead>
         <tr>

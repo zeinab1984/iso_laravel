@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -63,6 +64,18 @@ class PostController extends Controller
         $post->status = $request->status;
         $post->save();
         $post->tags()->attach($request->tag);
+
+        $fileModel = new File;
+        if($request->file()) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads/posts', $fileName, 'public');
+            $fileModel->name = time().'_'.$request->file->getClientOriginalName();
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->fileable_type = Post::class;
+            $fileModel->fileable_id = $post->id;
+            $fileModel->save();
+
+        }
         return redirect()->route('posts.index');
     }
 
@@ -126,4 +139,6 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('posts.index');
     }
+
+
 }

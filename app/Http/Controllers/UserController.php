@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,9 +50,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showImage()
     {
-        //
+        $user = Auth::user();
+        foreach ($user->files as $file){
+           $file_path = $file->file_path;
+        }
+
+        return view('profile.createForm',compact('file_path','user'));
     }
 
     /**

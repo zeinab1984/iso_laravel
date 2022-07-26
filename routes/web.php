@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard', function () {
     return view('layouts.dashboard');
 });
+
+
 //    ->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
@@ -74,9 +77,20 @@ Route::prefix('comments')->group(function (){
 });
 
 
-Route::get('/', [CustomAuthController::class, 'dashboard']);
+Route::get('/', [CustomAuthController::class, 'homePage']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signout'])->name('signout');
+
+
+Route::get('/', [HomeController::class, 'show'])->name('home.page');
+Route::get('/showImage', [UserController::class, 'showImage'])->name('showImage');
+Route::get('/single/{post}', [HomeController::class, 'single'])->name('single.post');
+
+//Route::get('login', [CustomAuthController::class, 'index'])->name('login');
+//Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
+//Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
+//Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
+//Route::get('signout', [CustomAuthController::class, 'signout'])->name('signout');

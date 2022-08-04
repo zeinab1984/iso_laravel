@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <form  method="post" action="{{route('posts.store')}}" >
+    <form  method="post" action="{{route('posts.store')}}" enctype="multipart/form-data" >
         @csrf
 {{--        @if ($errors->any())--}}
 {{--            <div class="alert alert-danger">--}}
@@ -63,16 +63,14 @@
                             <label class="form-check-label" for="tag{{$tag->id}}">{{$tag->title}}</label>
                         </div>
                     @endforeach
-
                 </div>
-
-            </div>
-            <!-- /.card-body -->
-
-            <div class="custom-file">
-                <input type="file" name="image" class="custom-file-input" id="chooseFile">
-                <label class="custom-file-label" for="chooseFile">انتخاب عکس</label>
-            </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input name="image" type="file" class="custom-file-input" id="chooseFile">
+                        <label class="custom-file-label" for="chooseFile">انتخاب عکس</label>
+                    </div>
+                </div>
+                </div>
 
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">ثبت</button>

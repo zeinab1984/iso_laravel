@@ -72,7 +72,7 @@
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/bootstrap_front.min.js')}}"></script>
-
+    @yield('myscript')
 </body>
 
 </html>

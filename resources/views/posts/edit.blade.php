@@ -4,7 +4,8 @@
 
 @section('content')
 
-    <form  method="post" action="{{route('posts.update',['post'=>$post->id])}}" >
+
+    <form  method="post" action="{{route('posts.update',['post'=>$post->id])}}" enctype="multipart/form-data">
         @csrf
         {{--        @if ($errors->any())--}}
         {{--            <div class="alert alert-danger">--}}
@@ -16,6 +17,11 @@
         {{--            </div>--}}
         {{--        @endif--}}
         <div class="card-header">
+            <div class="form-group">
+                @if($file_path)
+                    <image src="{{asset($file_path)}}" style="width:128px"></image>
+                @endif
+            </div>
             <h3 class="card-title">ویرایش پست </h3>
         </div>
         <!-- /.card-header -->
@@ -66,6 +72,11 @@
                           @endforeach
 
                 </div>
+                <div class="custom-file">
+                    <input name="image" type="file" class="custom-file-input" id="chooseFile">
+                    <label class="custom-file-label" for="chooseFile">انتخاب عکس</label>
+                </div>
+        </div>
 
         </div>
             <!-- /.card-body -->

@@ -34,21 +34,14 @@
                 <label> ایمیل:</label>
                 <input type="email" name="user_email" value="{{$user->email}}" class="form-control" >
             </div>
+            <div class="custom-file">
+                <input type="file" name="image" class="custom-file-input" id="chooseFile">
+                <label class="custom-file-label" for="chooseFile">انتخاب عکس</label>
+            </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
             </div>
         </div>
     </form>
-    <form  action="{{route('profile.fileUpload',['user'=>$user->id])}}" method="post" enctype="multipart/form-data">
-         @csrf
-        <div class="custom-file">
-            <input type="file" name="file" class="custom-file-input" id="chooseFile">
-            <label class="custom-file-label" for="chooseFile">انتخاب عکس</label>
-        </div>
-        <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
-            آپلود عکس
-        </button>
-    </form>
-
 
 @endsection

@@ -17,7 +17,7 @@
             </div>
 
             <div class="card-footer">
-
+                <image src="{{$user_pic}}" style="width: 128px;height:auto" ></image>
                 <p class="text-success text-center">نویسنده: {{$post->user->name}}</p>
                 <a href="{{route('single.post',['post'=>$post->id])}}" class="btn btn-outline-secondary btn-block">ادامه مطلب</a>
             </div>

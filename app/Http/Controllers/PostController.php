@@ -52,7 +52,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,File $file)
     {
 //        dd($request);
         $post =new Post();
@@ -60,22 +60,15 @@ class PostController extends Controller
         $post->short_content = $request->short_content;
         $post->content = $request->post_content;
         $post->category_id = $request->category_id;
-        $post->user_id = 1;
+        $post->user_id = Auth::user()->id;
         $post->status = $request->status;
         $post->save();
         $post->tags()->attach($request->tag);
+        $object = $post;
 
-        $fileModel = new File;
-        if($request->file()) {
-            $fileName = time().'_'.$request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads/posts', $fileName, 'public');
-            $fileModel->name = time().'_'.$request->file->getClientOriginalName();
-            $fileModel->file_path = '/storage/' . $filePath;
-            $fileModel->fileable_type = Post::class;
-            $fileModel->fileable_id = $post->id;
-            $fileModel->save();
+        UploadFile($request,$object);
 
-        }
+
         return redirect()->route('posts.index');
     }
 
@@ -98,11 +91,18 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $file_path = "";
+        foreach ($post->files as $file){
+            if(isset($file->file_path)){
+                $file_path = $file->file_path;
+            }
+        }
         $data = [
             'post'=>$post,
             'categories'=>Category::all(),
             'tags'=>Tag::all(),
             'tag_ids'=> $post->tags()->pluck('id')->toArray(),
+            'file_path'=> $file_path,
         ];
 //        dd($data);
         return view('posts.edit',$data);
@@ -125,6 +125,15 @@ class PostController extends Controller
         $post->status = $request->status;
         $post->save();
         $post->tags()->sync($request->tag);
+        UploadFile($request,$post);
+//        foreach ($post->files as $file){
+//            if(($file->fileable_id)>1)
+//                {
+//                    $post->files()->delete();
+//                }
+//        }
+
+
         return redirect()->route('posts.index');
     }
 

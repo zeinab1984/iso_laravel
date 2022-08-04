@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\File;
+use App\Models\User;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view::composer(['frontpage.*','layouts.dashboard'],function($view){
+           $view->with('user_pic',User::getUserImage());
+        });
+
     }
+
 }

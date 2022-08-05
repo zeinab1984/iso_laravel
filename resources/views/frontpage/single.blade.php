@@ -1,5 +1,5 @@
 @extends('frontpage.index')
-
+@section('title',$post->title)
 @section('content')
     <main class="rtl mt-3">
         <div class="container">
@@ -57,43 +57,36 @@
                     <button type="submit" class="btn btn-success">ارسال</button>
                 </form>
             </div>
-
+            <br><br>
+            <h5 class="mb-3"> نظر کاربران</h5>
+            <hr>
+            @include('frontpage.replyAdd',['comments'=>$post->comments,'post_id'=>$post->id ])
 {{--show comments--}}
-           <div class="container">
-               <h5 class="mb-3"> نظر کاربران</h5>
-                <form action="{{route('replyAdd')}}" method="post">
-                @csrf
-                @foreach($post->comments as $comment)
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-        {{--                        <label for="inputEmail4"> نظر : {{$comment->user->name}}  </label>--}}
-                            <textarea name="comment_content"  class="form-control" id="inputEmail4" cols="30" rows="2">{{$comment->content}}</textarea>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-primary" id="reply">پاسخ</button>
-                        </div>
-                    </div>
-                {{-- Form reply--}}
-                <div class="form-group col-md-12" id="reply-form" style="display: none">
-                     @include('frontpage.replyAdd',['post_id'=>$post->id , 'parent_id'=>$comment->id])
-                </div>
-                @endforeach
-               </form>
-            </div>
+{{--           <div class="container">--}}
+{{--               <h5 class="mb-3"> نظر کاربران</h5>--}}
+
+{{--                <form action="{{route('replyAdd')}}" method="post" >--}}
+{{--                @csrf--}}
+{{--                @foreach($post->comments as $comment)--}}
+
+{{--                    <div class="form-row">--}}
+{{--                        <div class="form-group col-md-12">--}}
+{{--                                <label for="inputEmail4"> نظر : @if($comment->user->name==Null) {{$comment->author_name}}@else{{$comment->user->name}} @endif</label>--}}
+{{--                            <textarea name="comment_content"  class="form-control" id="inputEmail4" cols="30" rows="2">{{$comment->content}}</textarea>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group col-md-12">--}}
+{{--                            <button type="submit" class="fa-reply" data-comment_id="{{$comment->id}}">پاسخ</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{-- --}}{{-- Form reply--}}
+{{--                <div class="form-group col-md-12" id="reply-form-{{$comment->id}}" style="display: none">--}}
+{{--                     @include('frontpage.replyAdd',['post_id'=>$post->id , 'parent_id'=>$comment->id])--}}
+{{--                </div>--}}
+{{--                @endforeach--}}
+{{--               </form>--}}
+{{--           </div>--}}
 
         </div>
     </main>
 @endsection
-@section('myscript')
-    <script>
-        $(document).ready(function (){
 
-            $("#reply").click(function (e){
-                e.preventDefault();
-                $("#reply-form").show("slow");
-            })
-        });
-
-
-    </script>
-@endsection

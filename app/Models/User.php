@@ -71,12 +71,14 @@ class User extends Authenticatable
 
     public static function getUserImage()
     {
-        if(Auth::user()->files()->first()!="" && Auth::user()->files()->first()!=null){
-            $user_pic = Auth::user()->files()->first()->file_path;
-        }else{
-            $user_pic = asset('storage/uploads/1659078578_avatar3.png/');
+        if(Auth::user()) {
+            if (Auth::user()->files()->first() != "" && Auth::user()->files()->first() != null) {
+                $user_pic = Auth::user()->files()->first()->file_path;
+            } else {
+                $user_pic = asset('storage/uploads/1659078578_avatar3.png/');
+            }
+            return $user_pic;
         }
-        return $user_pic;
     }
 
 

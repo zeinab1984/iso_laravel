@@ -21,7 +21,7 @@ class Comment extends Model
 
     public function replies()
     {
-        return $this->hasMany(Comment::class,'parent_id')->where('is_confirm',1);
+        return $this->hasMany(Comment::class,'parent_id');
     }
 
 }

@@ -18,9 +18,9 @@
         {{--        @endif--}}
         <div class="card-header">
             <div class="form-group">
-                @if($file_path)
-                    <image src="{{asset($file_path)}}" style="width:128px"></image>
-                @endif
+
+                    <image src="{{$post_pic}}" style="width:128px"></image>
+
             </div>
             <h3 class="card-title">ویرایش پست </h3>
         </div>

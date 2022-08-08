@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -39,8 +40,8 @@ class PostController extends Controller
     public function create()
     {
             $data =[
-            'categories' => Category::all(),
-                'tags'=>Tag::all()
+                'categories' => Category::all(),
+                'tags'=>Tag::all(),
             ];
 
         return view('posts.create',$data);
@@ -54,7 +55,7 @@ class PostController extends Controller
      */
     public function store(Request $request,File $file)
     {
-//        dd($request);
+//        dd($request->file());
         $post =new Post();
         $post->title = $request->title;
         $post->short_content = $request->short_content;
@@ -64,10 +65,14 @@ class PostController extends Controller
         $post->status = $request->status;
         $post->save();
         $post->tags()->attach($request->tag);
-        $object = $post;
 
-        UploadFile($request,$object);
+        if($request->hasFile('image')){
 
+            $pic = $request->file('image');
+            $path = 'posts';
+            $file = UploadFile($pic,$path);
+            $post->files()->save($file);
+        }
 
         return redirect()->route('posts.index');
     }
@@ -91,18 +96,19 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $file_path = "";
+        $post_pic = "";
         foreach ($post->files as $file){
-            if(isset($file->file_path)){
-                $file_path = $file->file_path;
+            if(filled($file->file_path)) {
+                $post_pic = storage::url($file->file_path);
             }
         }
+
         $data = [
             'post'=>$post,
             'categories'=>Category::all(),
             'tags'=>Tag::all(),
             'tag_ids'=> $post->tags()->pluck('id')->toArray(),
-            'file_path'=> $file_path,
+            'post_pic'=>$post_pic,
         ];
 //        dd($data);
         return view('posts.edit',$data);
@@ -125,13 +131,23 @@ class PostController extends Controller
         $post->status = $request->status;
         $post->save();
         $post->tags()->sync($request->tag);
-        UploadFile($request,$post);
-//        foreach ($post->files as $file){
-//            if(($file->fileable_id)>1)
-//                {
-//                    $post->files()->delete();
-//                }
-//        }
+
+        //delete old pics from directory and relationship
+        if(filled($post->files)){
+            foreach ($post->files as $file){
+                storage::delete($file->file_path.'/'.$file->name);
+                $post->files()->delete();
+            }
+        }
+        //save new pic
+        if($request->hasFile('image')){
+
+            $pic = $request->file('image');
+            $path = 'posts';
+            $file = UploadFile($pic,$path);
+            $post->files()->save($file);
+        }
+
 
 
         return redirect()->route('posts.index');

@@ -2,18 +2,14 @@
 
 use App\Models\File;
 use App\Models\User;
-function UploadFile($request,$object)
+function UploadFile($pic,$path): File
 {
-//    dd($request->file('image'));
-    if ($request->file()) {
-        $fileModel = new File;
-        $req = $request->file('image');
-        $fileName = time().'_'.$req->getClientOriginalName();
-        $filePath = $req->storeAs('uploads', $fileName, 'public');
-        $fileModel->name = $fileName ;
-        $fileModel->file_path = '/storage/' . $filePath;
-        $object->files()->save($fileModel);
 
-    }
+        $fileName = time().'_'.$pic->getClientOriginalName();
+        $pic->move('public/'.$path,$fileName);
 
+        return new File([
+            'name'=> $fileName,
+            'file_path'=> $path.'/'.$fileName,
+        ]);
 }

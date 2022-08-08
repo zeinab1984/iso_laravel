@@ -22,14 +22,21 @@ class FileController extends Controller
         return view('profile.createForm',compact('user','file_path'));
     }
 
-    public function update(Request $request,User $user,File $file )
+    public function update(Request $request,User $user )
     {
 //        dd($request);
         $user->name = $request->name;
         $user->email = $request->user_email;
         $user->save();
-        $object = $user;
-        UploadFile($request,$object);
+        if($user->files()){
+            $user->files()->delete();
+            $path ='avatars';
+        }else{
+            $path ='avatars';
+        }
+        $file = UploadFile($request->image,$path);
+        $user->files()->save($file);
+
         return redirect()->route('profile.createForm');
     }
 

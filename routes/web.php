@@ -90,9 +90,6 @@ Route::get('/showImage', [UserController::class, 'showImage'])->name('showImage'
 Route::get('/single/{post}', [HomeController::class, 'single'])->name('single.post');
 Route::post('/CommentAdd', [HomeController::class, 'CommentAdd'])->name('CommentAdd');
 Route::post('/replyAdd', [HomeController::class, 'replyAdd'])->name('replyAdd');
+Route::post('/search', [HomeController::class, 'search'])->name('index.search');
 
-//Route::get('login', [CustomAuthController::class, 'index'])->name('login');
-//Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
-//Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
-//Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
-//Route::get('signout', [CustomAuthController::class, 'signout'])->name('signout');
+

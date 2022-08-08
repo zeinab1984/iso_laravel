@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -12,6 +13,7 @@ class Post extends Model
 
 
     private mixed $id;
+
 
     public function category()
      {
@@ -38,6 +40,21 @@ class Post extends Model
         return $this->morphMany(File::class,'fileable');
 
     }
+
+
+    public static function getLatestPost()
+    {
+        return static::query()->where('status','منتشر شده')->with(['files','category','user'])->latest()->take(3)->get();
+
+    }
+
+
+//    public static function getPostImage()
+//    {
+//
+//        return static::query()->with('files')->first()->get();
+//
+//    }
 
 
 }

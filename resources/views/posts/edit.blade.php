@@ -7,20 +7,11 @@
 
     <form  method="post" action="{{route('posts.update',['post'=>$post->id])}}" enctype="multipart/form-data">
         @csrf
-        {{--        @if ($errors->any())--}}
-        {{--            <div class="alert alert-danger">--}}
-        {{--                <ul>--}}
-        {{--                    @foreach ($errors->all() as $error)--}}
-        {{--                        <li>{{ $error }}</li>--}}
-        {{--                    @endforeach--}}
-        {{--                </ul>--}}
-        {{--            </div>--}}
-        {{--        @endif--}}
         <div class="card-header">
             <div class="form-group">
-                @if($file_path)
-                    <image src="{{asset($file_path)}}" style="width:128px"></image>
-                @endif
+
+                    <image src="{{asset('public/'.$post->files()->first()->file_path)}}" style="width:128px"></image>
+
             </div>
             <h3 class="card-title">ویرایش پست </h3>
         </div>

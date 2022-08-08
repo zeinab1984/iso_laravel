@@ -7,15 +7,24 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+
+use function PHPUnit\Framework\countOf;
 
 class HomeController extends Controller
 {
     public function show(Request $request)
     {
 
-        $posts = Post::all();
+        Cache::remember('posts',now()->addMinutes(1),function (){
+//            dd(Post::all());
+
+        });
+        $posts = Post::query()->where('status','منتشر شده')->get();
         $users = User::all();
-        $file_path = "";
 
         return view('frontpage.show',compact('posts','users'));
     }
@@ -23,9 +32,9 @@ class HomeController extends Controller
     public function single(Post $post)
     {
         $file_path = "";
-        foreach ($post->files as $file){
-            if(isset($file->file_path)){
-                $file_path = $file->file_path;
+        foreach ($post->files as $pic){
+            if(isset($pic->file_path)){
+                $file_path = $pic->file_path;
             }
         }
         return view('frontpage.single',compact('post','file_path'));
@@ -75,5 +84,20 @@ class HomeController extends Controller
             $comment->save();
         }
         return back();
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $result = Post::query()->where('status','منتشر شده')
+              ->where('title','like','%'. $request->search.'%')
+//                ->orWhere(function ($query){
+//                  $query ->Where('short_content','like','%'.$request->search.'%')
+//                        ->orWhere('content','like', '%'. $request->search.'%');
+//                })
+            ->get();
+
+
+        return view('frontpage.search',compact('result'));
     }
 }

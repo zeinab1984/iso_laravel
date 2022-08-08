@@ -21,7 +21,7 @@
                 <td>{{$post->title}}</td>
                 <td>{{$post->category->title}}</td>
                 <td width="300px">{{$post->short_content}}</td>
-                <td>{{$post->user_id}}</td>
+                <td>{{$post->user->name}}</td>
                 <td>{{$post->status}}</td>
                 <td>
                     <a href="{{route('posts.edit',['post'=>$post->id])}}" class="btn btn-sm btn-primary">ویرایش</a>

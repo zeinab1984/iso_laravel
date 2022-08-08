@@ -5,11 +5,15 @@
 <main class="rtl mt-3">
     <div class="d-flex justify-content-center flex-wrap">
         @foreach($posts as $post)
-        <div class="card m-2" style="width: 18rem;">
-            @foreach($post->files as $file)
-            <img src="{{asset($file->file_path)}}" class="card-img-top" alt="store">
-            @endforeach
-            <div class="card-body">
+                <div class="card m-2" style="width: 18rem;">
+                    @if($post->files->first()==null && $post->files->first()=="")
+                        <img src="{{asset('storage/public/posts/1659783458_photo4.jpg')}}" alt="store" style="width: 286px;height: 286px">
+                    @else
+                        <img src="{{asset('public/'.$post->files->first()->file_path)}}" alt="store" style="width: 286px;height: 286px">
+                    @endif
+
+
+                    <div class="card-body">
                 <h5 class="card-title">
                     <a href="{{route('single.post',['post'=>$post->id])}}" class="nav-link p-0 text-dark">{{$post->title}}</a>
                 </h5>
